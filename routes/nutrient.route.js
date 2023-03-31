@@ -73,8 +73,9 @@ nutriRouter.post("/add", adminauth, async (req, res) => {
 // to update nutrien only by authorized (admin)
 nutriRouter.patch("/update/:id", adminauth, async (req, res) => {
   const { id } = req.params;
+  const payload = req.body;
   try {
-    await NutrientModel.findByIdAndUpdate({ _id: id });
+    await NutrientModel.findByIdAndUpdate({ _id: id }, payload);
     res.status(200).send({ message: "Nutrient data has been updated" });
   } catch (err) {
     res.status(400).send({ message: err.message });
