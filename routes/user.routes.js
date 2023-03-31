@@ -151,4 +151,21 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
+userRouter.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await UserModel.findByIdAndDelete({ _id: id });
+    if (result.deletedCount === 0) {
+      return res.status(404).send({
+        message: `${result.deletedCount} documents have been deleted`,
+      });
+    }
+    res.status(200).send({ message: "User deleted successfully" });
+  } catch (err) {
+    res
+      .status(400)
+      .send({ message: "An error occurred while deleting the data" });
+  }
+});
+
 module.exports = userRouter;
