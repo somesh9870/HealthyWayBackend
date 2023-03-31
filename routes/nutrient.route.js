@@ -6,8 +6,52 @@ const nutriRouter = express.Router();
 
 // to get the all data
 nutriRouter.get("/list", async (req, res) => {
+  const {
+    name,
+    energy,
+    fat,
+    carbs,
+    protein,
+    servingsize,
+    filter,
+    q,
+    limit,
+    page,
+  } = req.query;
+  const query = {};
+  if (name) {
+    query.name = RegExp(name, "i");
+  }
+  if (energy) {
+    query.energy = RegExp(energy, "i");
+  }
+  if (fat) {
+    query.fat = RegExp(fat, "i");
+  }
+  if (carbs) {
+    query.carbs = RegExp(carbs, "i");
+  }
+  if (protein) {
+    query.protein = RegExp(protein, "i");
+  }
+  if (servingsize) {
+    query.servingsize = RegExp(servingsize, "i");
+  }
+  if (filter) {
+    query.filter = RegExp(filter, "i");
+  }
+  if (q) {
+    query.name = RegExp(q, "i");
+  }
+
+  const pageNumber = page || 1;
+  const pageLimit = limit || 5;
+  const pagination = pageNumber * pageLimit - pageLimit || 0;
+
   try {
-    const nutrient = await NutrientModel.find({});
+    const nutrient = await NutrientModel.find(query)
+      .skip(pagination)
+      .limit(pageLimit);
     res.status(200).send({ data: nutrient });
   } catch (err) {
     res.status(400).send({ message: err.message });
