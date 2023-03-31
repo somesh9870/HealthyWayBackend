@@ -75,8 +75,14 @@ nutriRouter.patch("/update/:id", adminauth, async (req, res) => {
   const { id } = req.params;
   const payload = req.body;
   try {
-    await NutrientModel.findByIdAndUpdate({ _id: id }, payload);
-    res.status(200).send({ message: "Nutrient data has been updated" });
+    const result = await NutrientModel.findByIdAndUpdate({ _id: id }, payload);
+    if (result.modifiedCount === 0) {
+      return res.status(404).send({ message: "No matching documents found" });
+    }
+    res.status(200).send({
+      message: `${result.deletedCount} documents have been updated`,
+      data: payload,
+    });
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
@@ -86,8 +92,13 @@ nutriRouter.patch("/update/:id", adminauth, async (req, res) => {
 nutriRouter.delete("/delete/:id", adminauth, async (req, res) => {
   const { id } = req.params;
   try {
-    await NutrientModel.findByIdAndDelete({ _id: id });
-    res.status(200).send({ message: "Nutrient data has been deleted" });
+    const result = await NutrientModel.findByIdAndDelete({ _id: id });
+    if (result.deletedCount === 0) {
+      return res.status(404).send({ message: "No matching documents found" });
+    }
+    res
+      .status(200)
+      .send({ message: `${result.deletedCount} documents have been deleted` });
   } catch (err) {
     res.status(400).send({ message: err.message });
   }
