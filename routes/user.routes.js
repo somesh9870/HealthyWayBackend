@@ -160,7 +160,7 @@ userRouter.delete("/delete/:id", async (req, res) => {
         message: `${result.deletedCount} documents have been deleted`,
       });
     }
-    res.status(200).send({ message: "User deleted successfully" });
+    res.status(200).send({ message: `${result.deletedCount} documents have been deleted` });
   } catch (err) {
     res
       .status(400)

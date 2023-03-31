@@ -80,7 +80,7 @@ nutriRouter.patch("/update/:id", adminauth, async (req, res) => {
       return res.status(404).send({ message: "No matching documents found" });
     }
     res.status(200).send({
-      message: `${result.modifiedCount} documents have been updated`,
+      message: `Documents have been updated`,
       data: payload,
     });
   } catch (err) {
