@@ -141,6 +141,7 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+// to get the users data
 userRouter.get("/", async (req, res) => {
   try {
     const users = await UserModel.find({});
