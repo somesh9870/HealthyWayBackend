@@ -82,9 +82,9 @@ userRouter.post("/verify-otp", async (req, res) => {
     }
 
     // changing date to readabel format
-    const dateString = birthday;
-    const date = new Date(dateString);
-    const formattedDate = date.toLocaleDateString();
+    // const dateString = birthday;
+    // const date = new Date(dateString);
+    // const formattedDate = date.toLocaleDateString();
 
     // hashing the password
     bcrypt.hash(password, 4, async (err, hash) => {
@@ -92,7 +92,7 @@ userRouter.post("/verify-otp", async (req, res) => {
         email,
         password: hash,
         sex,
-        birthday: formattedDate,
+        birthday,
         height,
         weight,
       };
