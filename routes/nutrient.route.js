@@ -45,7 +45,7 @@ nutriRouter.get("/list", async (req, res) => {
   }
 
   const pageNumber = page || 1;
-  const pageLimit = limit || 5;
+  const pageLimit = limit || 10;
   const pagination = pageNumber * pageLimit - pageLimit || 0;
 
   try {
