@@ -30,6 +30,7 @@ const nutrientSchema = mongoose.Schema(
       type: String,
     },
     userID: String,
+    active: Boolean,
   },
   {
     versionKey: false,

@@ -116,8 +116,12 @@ userRouter.post("/login", async (req, res) => {
 
     if (user.length > 0) {
       // comparing the password with the existing user password
-      bcrypt.compare(password, user[0].password, (err, result) => {
+      bcrypt.compare(password, user[0].password, async (err, result) => {
         if (result) {
+          await UserModel.findByIdAndUpdate(
+            { _id: user[0]._id },
+            { active: true }
+          );
           res.status(200).send({
             message: "Login successful",
             // Generating the jwt token
