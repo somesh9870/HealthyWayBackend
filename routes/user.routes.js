@@ -72,7 +72,7 @@ userRouter.post("/verify-otp", async (req, res) => {
   }
 
   // OTP is valid, signup process
-  const { email, password, sex, birthday, height, weight } = req.body;
+  const { email, password, sex, birthday, height, weight, active } = req.body;
 
   try {
     // Reconfirming email address exists or not
@@ -95,6 +95,7 @@ userRouter.post("/verify-otp", async (req, res) => {
         birthday,
         height,
         weight,
+        active,
       };
       const user = new UserModel(payload);
       await user.save();
