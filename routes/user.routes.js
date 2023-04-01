@@ -151,6 +151,16 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
+userRouter.get("/user/:id", (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = UserModel.findById({ _id: id });
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+});
+
 userRouter.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -160,7 +170,9 @@ userRouter.delete("/delete/:id", async (req, res) => {
         message: `${result.deletedCount} documents have been deleted`,
       });
     }
-    res.status(200).send({ message: `${result.deletedCount} documents have been deleted` });
+    res
+      .status(200)
+      .send({ message: `${result.deletedCount} documents have been deleted` });
   } catch (err) {
     res
       .status(400)
