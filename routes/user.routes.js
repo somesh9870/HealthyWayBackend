@@ -154,7 +154,7 @@ userRouter.get("/", async (req, res) => {
 userRouter.get("/user/:id", (req, res) => {
   const { id } = req.params;
   try {
-    const user = UserModel.findById({ _id: id });
+    const user = UserModel.find({ _id: id });
     res.status(200).send(user);
   } catch (err) {
     res.status(400).send({ message: err.message });
