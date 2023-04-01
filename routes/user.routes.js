@@ -4,6 +4,7 @@ const UserModel = require("../models/user.model");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const UserData = require("../models/userdata.model");
 
 const userRouter = express.Router();
 
@@ -151,10 +152,10 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
-userRouter.get("/user/:id", (req, res) => {
+userRouter.get("/user/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const user = UserModel.find({ _id: id });
+    const user = await UserData.find({ userID: id });
     res.status(200).send(user);
   } catch (err) {
     res.status(400).send({ message: err.message });
