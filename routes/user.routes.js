@@ -152,7 +152,7 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
-userRouter.get("/user/:id", async (req, res) => {
+userRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const user = await UserData.find({ userID: id });
