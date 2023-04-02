@@ -80,7 +80,7 @@ userRouter.post("/signup", async (req, res) => {
       });
 
       // Returning OTP to client
-      return res.status(200).send({ otp });
+      return res.status(200).send({ otp, msg: "SignUp successful" });
     }
   });
 });
