@@ -68,7 +68,7 @@ userRouter.post("/verify-otp", async (req, res) => {
     return res.status(400).send("OTP is required");
   }
 
-  if (otp !== req.session.otp) {
+  if (otp != req.session.otp) {
     return res.status(401).send("Invalid OTP");
   }
 
@@ -90,6 +90,7 @@ userRouter.post("/verify-otp", async (req, res) => {
       day: "numeric",
       year: "numeric",
     });
+    console.log(formattedDate);
 
     // hashing the password
     bcrypt.hash(password, 4, async (err, hash) => {
