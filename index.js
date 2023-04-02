@@ -41,3 +41,46 @@ app.listen(process.env.port, async () => {
   }
   console.log(`Server listening on ${process.env.port}`);
 });
+
+
+
+
+/*
+
+  try {
+    // Reconfirming email address exists or not
+    // const isEmail = await UserModel.find({ email: email });
+    // if (isEmail.length > 0) {
+    //   return res.status(400).send({ message: "Email already exists" });
+    // }
+
+    // changing date to readabel format
+    const dateString = birthday;
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    console.log(formattedDate);
+
+    // hashing the password
+    bcrypt.hash(password, 4, async (err, hash) => {
+      const payload = {
+        email,
+        password: hash,
+        sex,
+        birthday: formattedDate,
+        height,
+        weight,
+        active,
+      };
+      const user = new UserModel(payload);
+      await user.save();
+      res.status(200).send({ message: "Signup successful" });
+    });
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+
+*/
