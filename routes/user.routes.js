@@ -28,41 +28,6 @@ userRouter.post("/signup", async (req, res) => {
   // Generating OTP
   const otp = Math.floor(1000 + Math.random() * 9000);
 
-  try {
-    // Reconfirming email address exists or not
-    // const isEmail = await UserModel.find({ email: email });
-    // if (isEmail.length > 0) {
-    //   return res.status(400).send({ message: "Email already exists" });
-    // }
-
-    // changing date to readabel format
-    const dateString = birthday;
-    const date = new Date(dateString);
-    const formattedDate = date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-    console.log(formattedDate);
-
-    // hashing the password
-    bcrypt.hash(password, 4, async (err, hash) => {
-      const payload = {
-        email,
-        password: hash,
-        sex,
-        birthday: formattedDate,
-        height,
-        weight,
-        active,
-      };
-      const user = new UserModel(payload);
-      await user.save();
-      // res.status(200).send({ message: "Signup successful" });
-    });
-  } catch (err) {
-    res.status(400).send({ message: err.message });
-  }
 
   // Sending OTP via email using nodemailer
   const transporter = nodemailer.createTransport({
@@ -111,41 +76,41 @@ userRouter.post("/verify-otp", async (req, res) => {
   // OTP is valid, signup process
   const { email, password, sex, birthday, height, weight, active } = req.body;
 
-  // try {
-  //   // Reconfirming email address exists or not
-  //   const isEmail = await UserModel.find({ email: email });
-  //   if (isEmail.length > 0) {
-  //     return res.status(400).send({ message: "Email already exists" });
-  //   }
+  try {
+    // Reconfirming email address exists or not
+    const isEmail = await UserModel.find({ email: email });
+    if (isEmail.length > 0) {
+      return res.status(400).send({ message: "Email already exists" });
+    }
 
-  //   // changing date to readabel format
-  //   const dateString = birthday;
-  //   const date = new Date(dateString);
-  //   const formattedDate = date.toLocaleDateString("en-US", {
-  //     month: "long",
-  //     day: "numeric",
-  //     year: "numeric",
-  //   });
-  //   console.log(formattedDate);
+    // changing date to readabel format
+    const dateString = birthday;
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    console.log(formattedDate);
 
-  //   // hashing the password
-  //   bcrypt.hash(password, 4, async (err, hash) => {
-  //     const payload = {
-  //       email,
-  //       password: hash,
-  //       sex,
-  //       birthday: formattedDate,
-  //       height,
-  //       weight,
-  //       active,
-  //     };
-  //     const user = new UserModel(payload);
-  //     await user.save();
-  //     res.status(200).send({ message: "Signup successful" });
-  //   });
-  // } catch (err) {
-  //   res.status(400).send({ message: err.message });
-  // }
+    // hashing the password
+    bcrypt.hash(password, 4, async (err, hash) => {
+      const payload = {
+        email,
+        password: hash,
+        sex,
+        birthday: formattedDate,
+        height,
+        weight,
+        active,
+      };
+      const user = new UserModel(payload);
+      await user.save();
+      res.status(200).send({ message: "Signup successful" });
+    });
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
 });
 
 // to login the user
